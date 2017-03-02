@@ -17,6 +17,7 @@ public class AnalizadorAccesosAServidor
     private ArrayList<Acceso> entradasServidor;
     //almacena en cada posición el nº de entradas por cada hora.
     private ArrayList<Integer> entradasEnHora;
+   
     /**
      * Constructor for objects of class AnalizadorAccesosAServidor
      */
@@ -24,6 +25,7 @@ public class AnalizadorAccesosAServidor
     {
         entradasServidor = new ArrayList<>();
         entradasEnHora = new ArrayList<>();
+
     }
 
     /**
@@ -74,24 +76,24 @@ public class AnalizadorAccesosAServidor
      *pantalla dicha hora y la devuelve. En caso de que se invoque este método sin haberse invocado el anterior el método informa
      *por pantalla de que no tiene datos y no hace nada más.            arrayDeHoras.length
      */
-    public int obtenerHoraMasAccesos(){     
+    public int obtenerHoraMasAccesos(){           
         int solucion = -1; // ------------- devuele la hora que más entradas ha tenido el servidor.
         if( !entradasServidor.isEmpty()){            
             for(int i = 0; i < 24; i ++){ 
                 int valorI = i;//------------ representa cada una de las horas del día.
-                int contEntradas = 0; // ---- cuenta las veces que una hora esta repetida, que son las entradas realizadas en esa hora.
+                 int contEntradas = 0; // ---- cuenta las veces que una hora esta repetida, que son las entradas realizadas en esa hora.
                 for(int pi = 0; pi < entradasServidor.size(); pi ++){// ------ pi, además, representa cada una de las entradas al servidor.
                     int valorPi = entradasServidor.get(pi).getHora();// ------ almacena la hora en que se produce cada una de las entradas.
-                    if(entradasServidor.get(valorI).getHora() == valorPi){//--- compara la hora tomada en el 1º for, con las horas marcadas
+                    if(valorI == valorPi){//--- compara la hora tomada en el 1º for, con las horas marcadas
                         contEntradas ++;                                  //-- en cada una de las entradas, Si hay horas repetidas, las suma.
                     }
                 }
                 // cada posición del ArrayList 'entradasEnHora' representa cada una de las horas, donde se almacena el nº veces que se repiten.
                 entradasEnHora.add(contEntradas);
-            }
+            } 
             int entradas = 0;// --------- almacena el mayor nº de entradas producido en una de las horas,
             for(int ci = 0; ci < entradasEnHora.size() ; ci ++){// --- recorre la colección del nº de entradas por cada una de las horas.
-                if(entradasEnHora.get(ci) > entradas){
+                if(entradasEnHora.get(ci) >= entradas){
                     entradas = entradasEnHora.get(ci);
                     solucion = ci;
                 }
@@ -104,6 +106,9 @@ public class AnalizadorAccesosAServidor
         else{
             System.out.println("  _____ Sin datos ¡¡¡¡¡.-");
         }
+        
+        entradasServidor.clear();
+        entradasEnHora.clear();
         return solucion;
     }
 
